@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase.js"></script>
+    <script src="{{ url_for('static', filename='init.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
+
+    <script>
+        function signOut() {
+            firebase.auth().signOut();
+            window.location.href = window.location.origin;
+        }
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title> What's Up | {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <section id="navbar" class="colored-section">
+        <div class="container-fluid-home">
+            <nav class="navbar navbar-home navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="">What's Up <i class="fab fa-viacoin"></i><i class="fab fa-viacoin"></i><i class="fab fa-uniregistry"></i></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-labe="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('view_all_events') }}">Events</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('reports') }}">Reports</a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="btn btn-light ml-3" type="button" onclick="signOut()">Sign Out</button>
+            </nav>
+        </div>
+    </section>
+
+    <section id="content" class="white-section">
+        {% block content %}{% endblock %}
+    </section>
+
+    <section id="message" class="white-section">
+        {% if error_message %}
+            <div class="container">
+                <br>
+                <p class="text-danger">Error: {{ error_message }}</p>
+            </div>
+        {% endif %}
+    </section>
+</body>
+</html>

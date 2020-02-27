@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Search Reports
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between p-0" style="border-bottom: 1px solid; border-color: LightGray;">
+                <h2>Search for '{{ query }}'</h2>
+        </div>
+    </div>
+    <br>
+    <div class="list-group">
+        {% if reports %}
+            {% for report in reports %}
+                <a href="{{ url_for('reports', report_id=report.id) }}" class="list-group-item list-group-item-action mb-3">
+                    {% if not event %}
+                        <p class="font-italic" style="font-weight: bold">{{ report.get_report_event().title }}</p>
+                    {% endif %}
+                    <hr> 
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-1" style="font-weight: bold">{{ report.username }}:</p>
+                        <p class="font-italic">{{ report.time.strftime('%Y-%m-%d %H:%M') }}</p>
+                    </div>
+                    <p>{{ report.comments }}</p>
+                </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <div class="container-fluid  mt-3 mb-3">
+        <div class="btn-toolbar justify-content-start" role="toolbar">
+            <div class="btn-group" role="group">
+                {% if event_id %}
+                    <a class="btn btn-primary" href="{{ url_for('reports', event_id=event_id) }}" role="button">Back to reports</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ url_for('reports') }}" role="button">Back to all reports</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
