@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+  <title>What's up</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900,900i|Ubuntu" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- MAIN Personalized style sheet -->
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- FirebaseUI style sheet -->
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
+  <!-- Font Awesome (for icons) -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png" />
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBTI7tR_VelmxLObp5WAKgHxDt3MHiBGgc",
+      authDomain: "whats-up-255316.firebaseapp.com",
+      databaseURL: "https://whats-up-255316.firebaseio.com",
+      projectId: "whats-up-255316",
+      storageBucket: "whats-up-255316.appspot.com",
+      messagingSenderId: "772241918644",
+      appId: "1:772241918644:web:f81919b112d7b8d45965e1",
+      measurementId: "G-25Y1X3K0F5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <script src="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js"></script>
+
+  <!-- JS for auth -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='auth.js') }}"></script>
+  <!-- Bootstrap scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <section id="title" class="colored-section">
+    <div class="container-fluid">
+      <!-- Nav Bar -->
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">What's Up</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-labe="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="">Download</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="contact">Contact Us</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="about">About Us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+      <!-- Title -->
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h1 class="big-heading">Stay aware of what's going on around you.</h1>
+          <button type="button" class="btn btn-dark btn-lg download-button"><i class="fab fa-apple"></i> Download</button>
+          <button type="button" class="btn btn-outline-light btn-lg download-button"><i class="fab fa-google-play"></i> Download</button>
+        </div>
+        <div class="col-lg-6">
+          <div id="firebaseui-auth-container" class="firebaseui-signin">
+            <div id="sign-out-div" hidden=true>
+              <button id="sign-out" class="btn btn-danger btn-lg btn-block">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+
+  <section id="features" class="white-section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="feature-three col-lg-4">
+          <i class="fas-three fas fa-bullseye"></i>
+          <h3 class="feature-title">Don't miss out on events near you</h3>
+          <p>Interesting things are always happening... Simply open our app and find out what's up!</p>
+        </div>
+
+        <div class="feature-three col-lg-4">
+          <i class="fas-three fas fa-cloud-upload-alt"></i>
+          <h3 class="feature-title">Swiftly promote your events</h3>
+          <p>Post about your event so that others nearby can join - don't forget to upload a picture!</p>
+        </div>
+
+        <div class="feature-three col-lg-4">
+          <i class="fas-three fas fa-money-bill-alt"></i>
+          <h3 class="feature-title">Earn points to join future events</h3>
+          <p>Post about events you attend to earn points. Use your points to buy tickets for future events!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+
+  <section id="testimonials" class="colored-section">
+    <div id="testimonial-carousel" class="carousel slide" data-ride="carousel" data-pause="hover">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active container-fluid">
+          <h2 class="testimonial-text">I had the best time at the taco making event. Thanks What's Up for helping me discover new things!</h2>
+          <img class="testimonial-image" src="../static/images/tacoGuy.jpg" alt="tacoGuy-profile">
+          <em>Muhammad, New York</em>
+        </div>
+        <div class="carousel-item container-fluid">
+          <h2 class="testimonial-text">Ever since I began using What's Up, the attendance at my event has skyrocketed.</h2>
+          <img class="testimonial-image" src="../static/images/ladyProfilePic.jpg" alt="lady-profile">
+          <em>Beverly, Austin</em>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#testimonial-carousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#testimonial-carousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+
+  <section id="cta" class="white-section">
+    <div class="container-fluid">
+      <h3 class="big-heading-2">Join, Create, or Endorse an Event!</h3>
+      <button type="button" class="btn btn-dark btn-lg download-button-cta"><i class="fab fa-apple"></i> Download</button>
+      <button type="button" class="btn btn-primary btn-lg download-button-cta"><i class="fab fa-google-play"></i> Download</button>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer id="footer" class="colored-section">
+    <div class="container-fluid">
+      <table class="table-bottom">
+        <tr>
+          <td class="fas-bottom"><i class="fab fa-twitter"></i></td>
+          <td class="fas-bottom"><i class="fab fa-facebook-f"></i></td>
+          <td class="fas-bottom"><i class="fab fa-instagram"></i></td>
+          <td class="fas-bottom"><i class="fas fa-envelope"></i></td>
+        </tr>
+      </table>
+      <p class="copyright-para">© Copyright 2019 What's Up</p>
+    </div>
+  </footer>
+
+</body>
+</html>

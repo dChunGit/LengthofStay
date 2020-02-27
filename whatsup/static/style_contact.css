@@ -1,0 +1,28 @@
+/* Nav-Bar identical to style_about.css */
+
+/* Text - Mission Statement */
+
+.main-frame {
+  margin: 0 30%;
+}
+
+.contact-block {
+  text-align: center;
+}
+
+.contact-title {
+  text-align: center;
+  margin-bottom: 6%;
+}
+
+.contact-sub-title {
+  margin: 5% 0;
+}
+
+.input-field {
+  margin: 2% 0;
+}
+
+/* .contact-form {
+
+} */

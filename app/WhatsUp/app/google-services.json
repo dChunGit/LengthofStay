@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1046636289560",
+    "firebase_url": "https://whats-up-12100.firebaseio.com",
+    "project_id": "whats-up-12100",
+    "storage_bucket": "whats-up-12100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046636289560:android:79de41fd0026799f04ed6d",
+        "android_client_info": {
+          "package_name": "com.simplex.whatsup.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046636289560-dni63pkgr5adotcbppbhska71p7e3rrp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simplex.whatsup.debug",
+            "certificate_hash": "5c3bf075a6687664fab6b9b3fe19b159df3d2dd5"
+          }
+        },
+        {
+          "client_id": "1046636289560-gde58q1dmjrqr3dmjddcm1lijpf48d87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWcXBnG1qqBt0z-pLX5Zvf2KYAmlZkpNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046636289560-gde58q1dmjrqr3dmjddcm1lijpf48d87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

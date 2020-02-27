@@ -1,0 +1,34 @@
+/* Sections */
+.colored-section {
+  background-color: #14868c;
+  color: white;
+  padding: 0 15%;
+  margin: 0 0 25px 0;
+}
+
+.white-section {
+  background-color: white;
+  color: black;
+  padding: 0 15%;
+  margin: 0 0 25px 0;
+}
+
+/* Navigation Bar */
+.navbar {
+  padding: 0 0 0 0;
+}
+
+.navbar-brand {
+  font-family: "Ubuntu";
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.nav-item {
+  padding: 0 3px;
+  font-family: "Ubuntu";
+}
+
+.nav-link {
+  font-weight: bold;
+}
