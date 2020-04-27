@@ -6,6 +6,8 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Global from '../Global'
+
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -25,12 +27,35 @@ export default class Home extends Component {
     this.state = {
       searching: false,
       searchAnim: new Animated.Value(1),
-      scaleAnim: new Animated.Value(1)
+      scaleAnim: new Animated.Value(1),
+      loading: false,
+      patientId: 231654,
+      patientData: {},
+      conditionData: {},
+      encounterData: {},
+      losPrediction: 7.9
+    }
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  async fetchData() {
+    try {
+      this.setState({loading: true})
+      const patientApiData = await sendRequest('Patient', this.state.patientId);
+      // const conditionApiData = await sendRequest('Condition', this.state.conditionId)
+      // const encounterApiData = await sendRequest("Encounter", this.state.encounterId)
+      console.log("Got Data")
+
+      this.setState({patientData: patientApiData, loading: false});
+    } catch (error) {
+      console.log("Error fetching data", error)
     }
   }
 
   toggleSearchbar(search) {
-    // this.setState({searching: !search})
     if(search) {
       //hide
       this.setState({searchAnim: new Animated.Value(1)}, () => {
@@ -75,19 +100,12 @@ export default class Home extends Component {
               outputRange: [-100, 0]
             }),
           },
-          // {
-          //   scale: searchAnim.interpolate({
-          //     inputRange: [0, 1],
-          //     outputRange: [0, 1]
-          //   })
-          // }
         ],
       }}>
         <TextInput 
           style={styles.searchbar}
           placeholder="Search for Patient ID..."
-          onChangeText={(id) => console.log(id)}
-          // value={this.state.filterText}
+          onSubmitEditing={(event) => console.log(event.nativeEvent.text)}
         />
       </Animated.View>
   }
@@ -139,7 +157,7 @@ export default class Home extends Component {
             <View style={styles.losInfo}>
               <Text style={styles.losHeader}>Length of Stay Prediction</Text>
               <View style={styles.losValue}>
-                <Text style={styles.losText}>7.1</Text>
+                <Text style={styles.losText}>{this.state.losPrediction}</Text>
                 <Text style={styles.losText}>Days</Text>
               </View>
             </View>
@@ -150,21 +168,21 @@ export default class Home extends Component {
               <View>
                 <Text style={styles.modelHeader}>Model 1</Text>
                 <View style={styles.modelValue}>
-                  <Text style={styles.modelText}>7.1</Text>
+                  <Text style={styles.modelText}>7.0</Text>
                   <Text style={styles.modelText}>Days</Text>
                 </View>
               </View>
               <View>
                 <Text style={styles.modelHeader}>Model 2</Text>
                 <View style={styles.modelValue}>
-                  <Text style={styles.modelText}>7.1</Text>
+                  <Text style={styles.modelText}>6.2</Text>
                   <Text style={styles.modelText}>Days</Text>
                 </View>
               </View>
               <View>
                 <Text style={styles.modelHeader}>Model 3</Text>
                 <View style={styles.modelValue}>
-                  <Text style={styles.modelText}>7.1</Text>
+                  <Text style={styles.modelText}>6.8</Text>
                   <Text style={styles.modelText}>Days</Text>
                 </View>
               </View>
@@ -175,6 +193,36 @@ export default class Home extends Component {
     );
   }
 };
+
+async function sendRequest(endpoint, patientId) {
+  try {
+    let response = await fetch(Global.appURL +'/' + endpoint + '/' + patientId);
+    let responseJson = await response.json();
+    console.log(responseJson)
+
+    return responseJson;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function getLOS(patientId) {
+
+  try {
+    let response = await fetch(Global.flaskURL + '/post-event', {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: data
+    })
+    
+    console.log(response.text())
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 
 const styles = StyleSheet.create({
   searchButton: {
@@ -248,13 +296,13 @@ const styles = StyleSheet.create({
   },
   losValue: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center'
   },
   losText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: "#4d89e8"
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    color: "#4d89e8",
   },
   infoText: {
     paddingStart:2,
