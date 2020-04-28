@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, TouchableOpacity, View, Text, TextInput, Status
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import Global from '../Global'
 
@@ -28,11 +26,11 @@ export default class Home extends Component {
       searching: false,
       searchAnim: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
-      loading: false,
-      patientId: 231654,
+      loading: true,
+      patientId: 231662,
       patientData: {},
-      conditionData: {},
-      encounterData: {},
+      conditionData: null,
+      encounterData: null,
       losPrediction: 7.9
     }
   }
@@ -45,11 +43,13 @@ export default class Home extends Component {
     try {
       this.setState({loading: true})
       const patientApiData = await sendRequest('Patient', this.state.patientId);
-      // const conditionApiData = await sendRequest('Condition', this.state.conditionId)
-      // const encounterApiData = await sendRequest("Encounter", this.state.encounterId)
+      const conditionApiData = await processRequest('Condition', this.state.patientId)
+      const encounterApiData = await processRequest("Encounter", this.state.patientId)
       console.log("Got Data")
 
-      this.setState({patientData: patientApiData, loading: false});
+      this.setState({patientData: patientApiData, conditionData: conditionApiData, 
+        encounterData: encounterApiData, loading: false});
+
     } catch (error) {
       console.log("Error fetching data", error)
     }
@@ -111,6 +111,28 @@ export default class Home extends Component {
   }
 
   render() {
+    const {loading, patientId, patientData, conditionData, encounterData} = this.state
+
+    if(loading) {
+      return (
+        <Text>Loading</Text>
+      )
+    }
+
+    var preX = "No"
+    if(conditionData != null) {
+      preX = "Yes"
+    }
+
+    var age = (new Date().getFullYear()) - (new Date(patientData.birthDate)).getFullYear()
+    console.log(age)
+
+    var religion = "None"
+    var tempReligion = patientData.extension[0].valueCodeableConcept.text
+    if(tempReligion != null) {
+      religion = tempReligion.toProperCase()
+    }
+
     return (
       <ScrollView style={{flex: 1, backgroundColor: '#ededed'}}>
         <StatusBar backgroundColor="#4d89e8" />
@@ -120,36 +142,36 @@ export default class Home extends Component {
             <Text style={styles.infoText}>Personal Information</Text>
             <View style={styles.patientInfo}>
               <View>
-                <Text style={styles.patientHeaderText}>Name</Text>
-                <Text style={styles.patientText}>Bob Smith</Text>
+                <Text style={styles.patientHeaderText}>Patient ID</Text>
+                <Text style={styles.patientText}>{patientId}</Text>
               </View>
               <View>
-                <Text style={styles.patientHeaderText}>Patient ID</Text>
-                <Text style={styles.patientText}>1233421</Text>
+                <Text style={styles.patientHeaderText}>Age</Text>
+                <Text style={styles.patientText}>{age}</Text>
+              </View>
+              <View>
+                <Text style={styles.patientHeaderText}>Gender</Text>
+                <Text style={styles.patientText}>{patientData.gender.toProperCase()}</Text>
               </View>
               <View>
                 <Text style={styles.patientHeaderText}>Ethnicity</Text>
-                <Text style={styles.patientText}>Asian</Text>
+                <Text style={styles.patientText}>{patientData.extension[1].valueCodeableConcept.text.toProperCase()}</Text>
               </View>
             </View>
           </View>
           <View style={styles.details}>
             <View style={styles.patientInfo}>
               <View>
-                <Text style={styles.patientHeaderText}>Age</Text>
-                <Text style={styles.patientText}>42</Text>
+                <Text style={styles.patientHeaderText}>Religion</Text>
+                <Text style={styles.patientText}>{religion}</Text>
               </View>
               <View>
-                <Text style={styles.patientHeaderText}>Gender</Text>
-                <Text style={styles.patientText}>Male</Text>
-              </View>
-              <View>
-                <Text style={styles.patientHeaderText}>Insurance</Text>
-                <Text style={styles.patientText}>Private</Text>
+                <Text style={styles.patientHeaderText}>Marital Status</Text>
+                <Text style={styles.patientText}>{patientData.maritalStatus.coding[0].code.toProperCase()}</Text>
               </View>
               <View>
                 <Text style={styles.patientHeaderText}>PreX Cond</Text>
-                <Text style={styles.patientText}>Yes</Text>
+                <Text style={styles.patientText}>{preX}</Text>
               </View>
             </View>
           </View>
@@ -200,7 +222,21 @@ async function sendRequest(endpoint, patientId) {
     let responseJson = await response.json();
     console.log(responseJson)
 
+
+
     return responseJson;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function processRequest(endpoint, patientId) {
+  try {
+    let response = await fetch(Global.appURL +'/' + endpoint + '?subject=' + patientId);
+    let responseJson = await response.json();
+    console.log(responseJson.entry)
+
+    return responseJson.entry;
   } catch (error) {
     console.error(error)
   }
@@ -222,6 +258,10 @@ async function getLOS(patientId) {
     console.error(error)
   }
 }
+
+String.prototype.toProperCase = function () {
+  return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
 
 
 const styles = StyleSheet.create({
