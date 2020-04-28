@@ -1,0 +1,28 @@
+{
+    "resourceType" : "Patient",
+    "id" : "9479",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/patient-religion",
+      "valueCodeableConcept" : {
+        "text" : "CATHOLIC"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+      "valueCodeableConcept" : {
+        "text" : "WHITE"
+      }
+    }],
+    "identifier" : [{
+      "value" : "10019"
+    }],
+    "gender" : "male",
+    "birthDate" : "2114-06-20",
+    "deceasedDateTime" : "2163-05-15",
+    "maritalStatus" : {
+      "coding" : [{
+        "system" : "http://mimic.physionet.org/fhir/MaritalStatus",
+        "code" : "DIVORCED"
+      }]
+    }
+}
