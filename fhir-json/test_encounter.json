@@ -1,0 +1,41 @@
+{
+    "resourceType" : "Encounter",
+    "id" : "177759",
+    "type" : [{
+      "coding" : [{
+        "system" : "http://mimic.physionet.org/fhir/AdmissionType",
+        "code" : "EMERGENCY"
+      }]
+    }],
+    "subject" : {
+      "reference" : "Patient/231662"
+    },
+    "period" : {
+      "start" : "2163-05-14T20:43:00",
+      "end" : "2163-05-15T12:00:00"
+    },
+    "diagnosis" : [{
+      "condition" : {
+        "reference" : "Condition/231663"
+      },
+      "rank" : 1
+    },],
+    "hospitalization" : {
+      "admitSource" : {
+        "coding" : [{
+          "system" : "http://mimic.physionet.org/fhir/AdmitSource",
+          "code" : "TRANSFER FROM HOSP/EXTRAM"
+        }]
+      },
+      "dischargeDisposition" : {
+        "coding" : [{
+          "system" : "http://mimic.physionet.org/fhir/DischargeLocation",
+          "code" : "DEAD/EXPIRED"
+        },
+        {
+          "system" : "http://terminology.hl7.org/CodeSystem/discharge-disposition",
+          "code" : "exp"
+        }]
+      }
+    }
+  }
