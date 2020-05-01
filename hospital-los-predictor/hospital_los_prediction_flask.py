@@ -18,23 +18,26 @@ import statsmodels.api as sm
 from sklearn.model_selection import GridSearchCV
 import seaborn as sns
 import flask
+import joblib
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def test():
+    df = joblib.load('los_training.pkl')
+    return "{} of {} patients died in the hospital".format(df['DECEASED'].sum(),
+                                                           df['SUBJECT_ID'].nunique())
+
+
+def train():
     df = pd.read_csv('data/ADMISSIONS.csv')
     df['ADMITTIME'] = pd.to_datetime(df['ADMITTIME'])
     df['DISCHTIME'] = pd.to_datetime(df['DISCHTIME'])
     df['LOS'] = (df['DISCHTIME'] - df['ADMITTIME']).dt.total_seconds() / 86400
-    df[['ADMITTIME', 'DISCHTIME', 'LOS']].head()
-    df['LOS'].describe()
-    df[df['LOS'] < 0]
-    df['LOS'][df['LOS'] > 0].describe()
     df = df[df['LOS'] > 0]
     df.drop(columns=['DISCHTIME', 'ROW_ID',
                      'EDREGTIME', 'EDOUTTIME', 'HOSPITAL_EXPIRE_FLAG',
                      'HAS_CHARTEVENTS_DATA'], inplace=True)
     df['DECEASED'] = df['DEATHTIME'].notnull().map({True: 1, False: 0})
-    return "{} of {} patients died in the hospital".format(df['DECEASED'].sum(),
-                                                     df['SUBJECT_ID'].nunique())
+    joblib.dump(df, 'los_training.pkl', compress=9)
