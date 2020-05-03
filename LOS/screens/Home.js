@@ -5,8 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import 'react-native-gesture-handler';
 
 import Global from '../Global'
+import patients from '../Data'
+
+const demoFlag = true
 
 export default class Home extends Component {
+
   constructor(props) {
     super(props)
     this.props.navigation.setOptions({
@@ -27,11 +31,11 @@ export default class Home extends Component {
       searchAnim: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
       loading: true,
-      patientId: 231662,
+      patientId: 231677,
       patientData: {},
       conditionData: null,
       encounterData: null,
-      losPrediction: 7.9
+      losPrediction: 0.0
     }
   }
 
@@ -40,15 +44,21 @@ export default class Home extends Component {
   }
 
   async fetchData() {
+    const {patientId} = this.state
+
     try {
       this.setState({loading: true})
-      const patientApiData = await sendRequest('Patient', this.state.patientId);
-      const conditionApiData = await processRequest('Condition', this.state.patientId)
-      const encounterApiData = await processRequest("Encounter", this.state.patientId)
+      const patientApiData = await sendRequest('Patient', patientId);
+      const conditionApiData = await processRequest('Condition', patientId)
+      const encounterApiData = await processRequest("Encounter", patientId)
       console.log("Got Data")
 
+      const losData = await getLOS(patientId)
+      console.log("Got LOS")
+
       this.setState({patientData: patientApiData, conditionData: conditionApiData, 
-        encounterData: encounterApiData, loading: false});
+        encounterData: encounterApiData, losPrediction: losData, loading: false});
+
 
     } catch (error) {
       console.log("Error fetching data", error)
@@ -125,7 +135,7 @@ export default class Home extends Component {
     }
 
     var age = (new Date().getFullYear()) - (new Date(patientData.birthDate)).getFullYear()
-    console.log(age)
+    // console.log(age)
 
     var religion = "None"
     var tempReligion = patientData.extension[0].valueCodeableConcept.text
@@ -222,11 +232,10 @@ async function sendRequest(endpoint, patientId) {
     let responseJson = await response.json();
     console.log(responseJson)
 
-
-
     return responseJson;
   } catch (error) {
     console.error(error)
+    return ""
   }
 }
 
@@ -239,24 +248,49 @@ async function processRequest(endpoint, patientId) {
     return responseJson.entry;
   } catch (error) {
     console.error(error)
+
+    if(demoFlag) {
+      switch (endpoint) {
+        case 'Encounter':
+          return patients.encounterData.entry
+        case 'Condition':
+          return patients.conditionData.entry
+      }
+    } 
   }
 }
 
 async function getLOS(patientId) {
+  var data = {}
+  if (demoFlag) {
+    data = getSampleData(patientId)
+  } else {
+    //parse from stuff
+  }
 
+  var packet = JSON.stringify(data)
+  console.log(packet)
+  // return 2.1
   try {
-    let response = await fetch(Global.flaskURL + '/post-event', {
+    let response = await fetch(Global.flaskURL, {
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/json',
         }),
-        body: data
+        body: packet
     })
-    
-    console.log(response.text())
+    var los = response.text()
+    console.log(los)
+    return los
   } catch (error) {
     console.error(error)
   }
+}
+
+function getSampleData(patientId) {
+  // console.log(patients.losData)
+  var samples = patients.losData.find((o) => o.ID == patientId)
+  return samples
 }
 
 String.prototype.toProperCase = function () {

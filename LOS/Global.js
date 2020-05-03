@@ -1,5 +1,5 @@
 module.exports = {
   token: '',
   appURL: 'https://r3.smarthealthit.org',
-  flaskURL: 'https://localhost'
+  flaskURL: 'http://10.0.2.2:8000'
 }

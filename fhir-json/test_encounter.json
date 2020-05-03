@@ -8,7 +8,7 @@
       }]
     }],
     "subject" : {
-      "reference" : "Patient/231662"
+      "reference" : "Patient/231677"
     },
     "period" : {
       "start" : "2163-05-14T20:43:00",
@@ -16,7 +16,7 @@
     },
     "diagnosis" : [{
       "condition" : {
-        "reference" : "Condition/231663"
+        "reference" : "Condition/231678"
       },
       "rank" : 1
     },],
