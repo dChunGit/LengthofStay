@@ -17,7 +17,7 @@ export default class Home extends Component {
       headerRight: () => (
         <TouchableOpacity
           style={styles.searchButton}
-          onPress={() => this.toggleSearchbar(this.state.searching)}>
+          onPress={() => this.toggleSearchbar()}>
           <Icon
             name="search"
             size={24}
@@ -65,8 +65,10 @@ export default class Home extends Component {
     }
   }
 
-  toggleSearchbar(search) {
-    if(search) {
+  toggleSearchbar() {
+    const {searching} = this.state
+
+    if(searching) {
       //hide
       this.setState({searchAnim: new Animated.Value(1)}, () => {
           Animated.timing(
@@ -78,13 +80,13 @@ export default class Home extends Component {
               easing: Easing.ease
             }
           ).start(({finished}) => {
-            this.setState({searching: !search})
+            this.setState({searching: !searching})
           })
         }
       )
     } else {
       //show
-      this.setState({searching: !search, searchAnim: new Animated.Value(0)}, () => {
+      this.setState({searching: !searching, searchAnim: new Animated.Value(0)}, () => {
         Animated.timing(
           this.state.searchAnim,
           {
@@ -115,7 +117,13 @@ export default class Home extends Component {
         <TextInput 
           style={styles.searchbar}
           placeholder="Search for Patient ID..."
-          onSubmitEditing={(event) => console.log(event.nativeEvent.text)}
+          onSubmitEditing={(event) => {
+            console.log(event.nativeEvent.text)
+            this.setState({patientId: event.nativeEvent.text}, () => {
+              this.fetchData()
+              this.toggleSearchbar()
+            })
+          }}
         />
       </Animated.View>
   }
@@ -194,7 +202,7 @@ export default class Home extends Component {
               </View>
             </View>
           </View>
-          <View style={styles.los}>
+          {/* <View style={styles.los}>
             <Text style={styles.infoText}>Model Predictions</Text>
             <View style={styles.modelInfo}>
               <View>
@@ -219,7 +227,7 @@ export default class Home extends Component {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     );
