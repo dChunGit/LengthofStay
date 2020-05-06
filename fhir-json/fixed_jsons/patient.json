@@ -1,0 +1,74 @@
+{
+  "resourceType": "Patient",
+  "id": "231677",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2020-05-02T19:43:18.705-04:00"
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/patient-religion",
+      "valueCodeableConcept": {
+        "text": "CATHOLIC"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+      "valueCodeableConcept": {
+        "text": "WHITE"
+      }
+    }
+  ],
+  "identifier": [
+    {
+      "value": "10019"
+    }
+  ],
+  "gender": "female",
+  "birthDate": "1977-06-20",
+  "maritalStatus": {
+    "coding": [
+      {
+        "system": "http://mimic.physionet.org/fhir/MaritalStatus",
+        "code": "MARRIED"
+      }
+    ]
+  }
+},
+{
+  "resourceType": "Patient",
+  "id": "231678",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2020-05-02T19:43:18.705-04:00"
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/patient-religion",
+      "valueCodeableConcept": {
+        "text": "PROTESTANT"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+      "valueCodeableConcept": {
+        "text": "WHITE"
+      }
+    }
+  ],
+  "identifier": [
+    {
+      "value": "10019"
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1969-02-13",
+  "maritalStatus": {
+    "coding": [
+      {
+        "system": "http://mimic.physionet.org/fhir/MaritalStatus",
+        "code": "MARRIED"
+      }
+    ]
+  }
+}
