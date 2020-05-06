@@ -344,6 +344,32 @@ export default class Home extends Component {
               </View>
             </View>
           </View>
+          <View style={styles.los}>
+            <Text style={styles.infoText}>Model Predictions</Text>
+            <View style={styles.modelInfo}>
+              <View>
+                <Text style={styles.modelHeader}>Model 1</Text>
+                <View style={styles.modelValue}>
+                  <Text style={styles.modelText}>-.0</Text>
+                  <Text style={styles.modelText}>Days</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.modelHeader}>Model 2</Text>
+                <View style={styles.modelValue}>
+                  <Text style={styles.modelText}>-.0</Text>
+                  <Text style={styles.modelText}>Days</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.modelHeader}>Model 3</Text>
+                <View style={styles.modelValue}>
+                  <Text style={styles.modelText}>-.0</Text>
+                  <Text style={styles.modelText}>Days</Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </ScrollView>
     );
